@@ -27,6 +27,28 @@ export default defineConfig(() => {
           }
         },
       },
+      {
+        name: 'inject-og-origin',
+        apply: 'build',
+        transformIndexHtml(html: string): string {
+          const rawHost =
+            process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+            process.env.VERCEL_URL ||
+            process.env.APP_URL ||
+            '';
+          if (!rawHost || rawHost.includes('MY_APP_URL')) {
+            return html;
+          }
+          const baseUrl = rawHost.startsWith('http')
+            ? rawHost.replace(/\/+$/, '')
+            : `https://${rawHost.replace(/\/+$/, '')}`;
+          return html
+            .replace(/content="\/images\/og-card\.jpg"/g, `content="${baseUrl}/images/og-card.jpg"`)
+            .replace(/property="og:url" content="\/"/g, `property="og:url" content="${baseUrl}/"`)
+            .replace(/"logo": "\/favicon-512\.png"/g, `"logo": "${baseUrl}/favicon-512.png"`)
+            .replace(/"image": "\/images\/og-card\.jpg"/g, `"image": "${baseUrl}/images/og-card.jpg"`);
+        },
+      },
     ],
     resolve: {
       alias: {
