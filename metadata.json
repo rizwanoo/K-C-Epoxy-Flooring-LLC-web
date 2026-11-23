@@ -1,0 +1,6 @@
+{
+  "name": "K & C Epoxy Flooring LLC",
+  "description": "Residential, commercial, and industrial epoxy flooring contractors serving Dallas–Fort Worth, Texas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
